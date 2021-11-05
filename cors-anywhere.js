@@ -320,7 +320,7 @@ function getHandler(options, proxy) {
 			corsMaxAge: corsAnywhere.corsMaxAge,
 		};
 
-		req.url = req.url.replace('iframe_proxy/', '')
+		req.url = req.url.replace("iframe_proxy/", "");
 
 		var cors_headers = withCORS({}, req);
 		if (req.method === "OPTIONS") {
@@ -457,19 +457,21 @@ function getHandler(options, proxy) {
 		req.corsAnywhereRequestState.proxyBaseUrl = proxyBaseUrl;
 
 		req.headers = {
-			// ...req.headers,
+			...req.headers,
 			"user-agent":
 				"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25",
-			"content-type": "application/json",
-			 ...(req.headers['content-length'] && {
-                                authorization: req.headers['content-length']
-                        }),
-			origin: "https://m.shopp.ir",
-			referrer: "https://m.shopp.ir/",
-			...(req.headers['authorization'] && {
-				authorization: req.headers['authorization']
+			...(req.headers["x-origin"] && {
+				origin: req.headers["x-origin"],
+			}),
+			...(req.headers["x-referrer"] && {
+				referer: req.headers["x-referrer"],
+			}),
+			...(req.headers["x-authority"] && {
+				authoriy: req.headers["x-authority"],
 			}),
 		};
+
+		console.log(req.headers);
 
 		proxyRequest(req, res, proxy);
 	};
