@@ -320,7 +320,9 @@ function getHandler(options, proxy) {
 			corsMaxAge: corsAnywhere.corsMaxAge,
 		};
 
+		// note: maybe removed in the future and add them to nginx
 		req.url = req.url.replace("iframe_proxy/", "");
+		req.url = req.url.replace("iframe_proxy_elastic/", "");
 
 		var cors_headers = withCORS({}, req);
 		if (req.method === "OPTIONS") {
@@ -458,8 +460,7 @@ function getHandler(options, proxy) {
 
 		req.headers = {
 			...req.headers,
-			"user-agent":
-				"Mozilla/5.0 (iPhone; CPU iPhone OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25",
+			"user-agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 6_0_1 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10A523 Safari/8536.25",
 			...(req.headers["x-origin"] && {
 				origin: req.headers["x-origin"],
 			}),
@@ -471,7 +472,7 @@ function getHandler(options, proxy) {
 			}),
 		};
 
-		console.log(req.headers);
+		// console.log(req.headers);
 
 		proxyRequest(req, res, proxy);
 	};
